@@ -13,7 +13,7 @@
 ## 2.1 接口说明
 
 api提交方式：HTTP POST(表单) Content-Type：application/x-www-form-urlencoded  
-充值回调方式：HTTP POST(表单) 参数格式实例：order\_number=1&amp;out\_trade\_num=1&amp;mobile=1&amp;otime=1&amp;state=1
+充值回调方式：HTTP POST(表单) 参数格式实例：order_number=1&out_trade_num=1&mobile=1&otime=1&state=1
 
 ## 2.2 签名说明
 
@@ -30,21 +30,20 @@ php签名实例（其它语言自行编写）：
 
 ~~~
 //签名参数只是示例，并非真实提交数据
-$param = [&quot;参数名称&quot;=&gt;&quot;参数值&quot;,...];
+$param = ["参数名称"=>"参数值",...];
 //字典排序
 ksort($param);
 //拼接签名串
-$sign_str = http_build_query($param) . &#039;&amp;apikey=aaaaaaaaaaaaaaaaaaa&#039;;
+$sign_str = http_build_query($param) . '&apikey=aaaaaaaaaaaaaaaaaaa';
 //签名
 $sign = strtoupper(md5(urldecode($sign_str)));
-$param[&#039;sign&#039;] = $sign;
+$param['sign'] = $sign;
 $httpdata = $param;
-
 ~~~
 
 ## 2.3 充值提交接口
 
-&gt; POST[http://域名/yrapi.php/index/recharge](http://xn--eqrt2g/yrapi.php/index/recharge)
+&gt; POST http://域名/yrapi.php/index/recharge
 
 ### 接口说明
 
@@ -58,7 +57,7 @@ $httpdata = $param;
 （同一商户，不能存在相同单号订单，相同订单号不能提单） |
 | product\_id | number | 68 | true | 产品ID（代理后台查看） |
 | mobile | string | 18866667777 | true | 充值号码（手机号、电费户、qq号等） |
-| notify\_url | string | [http://www.abc.com](http://www.abc.com/) | true | 回调地址，用于接收充值状态回调 |
+| notify\_url | string | http://www.abc.com | true | 回调地址，用于接收充值状态回调 |
 | userid | string | 10001 | true | 商户ID，通过客服或代理后台获取 |
 | amount | number | 100 | false | 面值，（不传不校验）如果产品的面值与此参数不同，提单驳回 |
 | price | number | 94.8 | false | 最高成本，（不传不校验）如果产品成本超过这个值，提单驳回 |
@@ -73,8 +72,7 @@ $httpdata = $param;
 
 ~~~
 请求示例：
-out_trade_num=ABC1111&amp;product_id=11&amp;mobile=18899998888&amp;notify_url=http://www.abc.com/yuanren&amp;userid=10001&amp;sign=GZWDK8X7TGJFA8N8O9HILQ6WSI46C8FJ
-
+out_trade_num=ABC1111&product_id=11&mobile=18899998888&notify_url=http://www.abc.com/yuanren&userid=10001&sign=GZWDK8X7TGJFA8N8O9HILQ6WSI46C8FJ
 ~~~
 
 ### 响应体
@@ -96,23 +94,22 @@ out_trade_num=ABC1111&amp;product_id=11&amp;mobile=18899998888&amp;notify_url=ht
 ~~~
 响应示例：
 {
-    &quot;errno&quot;: 0,
-    &quot;errmsg&quot;: &quot;下单成功&quot;,
-    &quot;data&quot;: {
-        &quot;order_number&quot;: &quot;XYZ111111&quot;,
-        &quot;mobile&quot;: &quot;18866667777&quot;,
-        &quot;product_id&quot;: 10001,
-        &quot;total_price&quot;: &quot;95.00&quot;,
-        &quot;out_trade_num&quot;: &quot;ABC1111&quot;,
-        &quot;title&quot;: &quot;100元话费&quot;,
+    "errno": 0,
+    "errmsg": "下单成功",
+    "data": {
+        "order_number": "XYZ111111",
+        "mobile": "18866667777",
+        "product_id": 10001,
+        "total_price": "95.00",
+        "out_trade_num": "ABC1111",
+        "title": "100元话费",
     }
 }
-
 ~~~
 
 ## 2.4 查询用户信息
 
-&gt; POST[http://域名/yrapi.php/index/user](http://xn--eqrt2g/yrapi.php/index/user)
+&gt; POST http://域名/yrapi.php/index/user
 
 ### 请求体(Request Body)
 
@@ -136,7 +133,7 @@ out_trade_num=ABC1111&amp;product_id=11&amp;mobile=18899998888&amp;notify_url=ht
 
 ## 2.5 获取产品类型和产品分类
 
-&gt; POST[http://域名/yrapi.php/index/typecate](http://xn--eqrt2g/yrapi.php/index/typecate)
+&gt; POST http://域名/yrapi.php/index/typecate
 
 ### 请求体(Request Body)
 
@@ -163,7 +160,7 @@ out_trade_num=ABC1111&amp;product_id=11&amp;mobile=18899998888&amp;notify_url=ht
 
 ## 2.5 获取产品
 
-&gt; POST[http://域名/yrapi.php/index/product](http://xn--eqrt2g/yrapi.php/index/product)
+&gt; POST http://域名/yrapi.php/index/product
 
 ### 请求体(Request Body)
 
@@ -203,7 +200,7 @@ out_trade_num=ABC1111&amp;product_id=11&amp;mobile=18899998888&amp;notify_url=ht
 
 ## 2.6 自发查询订单状态
 
-&gt; POST[http://域名/yrapi.php/index/check](http://xn--eqrt2g/yrapi.php/index/check)
+&gt; POST http://域名/yrapi.php/index/check
 
 ### 请求体(Request Body)
 
@@ -267,22 +264,20 @@ success
 ~~~
  php版回调验签示例：
 
- $apikey=&quot;你的秘钥&quot;;
+ $apikey="你的秘钥";
  $data = $_POST;//接收所有post的数据
- unset($data[&#039;sign&#039;]);//删除掉sign字段
+ unset($data['sign']);//删除掉sign字段
  ksort($data);//排序
- $sign_str = urldecode(http_build_query($data)) . &#039;&amp;apikey=&#039; . $apikey;//获得签名原串
+ $sign_str = urldecode(http_build_query($data)) . '&apikey=' . $apikey;//获得签名原串
  $mysign=strtoupper(md5($sign_str));//签名
- if($mysign==$_POST[&#039;sign&#039;]){
+ if($mysign==$_POST['sign']){
  //签名正确
  }
-
-
 ~~~
 
 ## 2.8 电费支持地区查询
 
-&gt; POST[http://域名/yrapi.php/index/elecity](http://xn--eqrt2g/yrapi.php/index/elecity)
+&gt; POST http://域名/yrapi.php/index/elecity
 
 ### 请求体(Request Body)
 
